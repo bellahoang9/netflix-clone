@@ -6,7 +6,7 @@ import "./Row.css";
 const base_url = "https://image.tmdb.org/t/p/original/"; 
 
 // props 
-function Row({ title, fetchUrl }) {
+function Row({ title, fetchUrl, isLargeRow }) {
     // state is shorting time memory way to write variable in react
     const [movies, setMovies] = useState([])
 
@@ -22,20 +22,22 @@ function Row({ title, fetchUrl }) {
         }
         fetchData();
     },[fetchUrl]);
-    console.table(movies)
+    // console.table(movies)
     return (
         <div className="row">
             {/* title */}
             <h2>{title}</h2>
             {/* container -> poster */}
-            <div className="row_posters">
+            <div className="row__posters">
             {/* several rowposter */}
 
                 {movies.map(movie => (
 
                 <img
-                    className="row_posters"
-                    src={`${base_url}${movie.poster_path}`} alt={movie.name}/>
+                    key={movie.id}
+                    className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+                    src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} 
+                    alt={movie.name}/>
             ))}
             </div>
             
